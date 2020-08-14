@@ -1,9 +1,15 @@
 import React from 'react'
-function Footer() {
+import styled from 'styled-components'
+function ComponentFooter() {
     return (
-        <footer>
+        <Footer>
             <p>Footer</p>
-        </footer>
+        </Footer>
     )
 }
-export default Footer
+export default ComponentFooter
+const Footer = styled.footer`
+    padding:10px 10px;
+    text-align:center;
+    font-size:12px;
+`
