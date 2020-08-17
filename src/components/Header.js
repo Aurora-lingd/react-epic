@@ -10,10 +10,24 @@ function ComponentHeader() {
                 <StyledLink to='/hiStory' activeClassName='active'>历史</StyledLink>
                 <StyledLink to='/about' activeClassName='active'>关于我</StyledLink>
             </nav>
+            <Login>
+                <Button>
+                    <StyledLink to='/login'>登录</StyledLink>
+                </Button>
+                <Button>
+                    <StyledLink to='/register'>注册</StyledLink>
+                </Button>
+            </Login>
         </Header>
     )
 }
 export default ComponentHeader
+const Login = styled.div`
+    margin-left:auto;
+`
+const Button = styled.button`
+    margin-left:10px;
+`
 const Header = styled.header`
     padding:10px 50px;
     display:flex;

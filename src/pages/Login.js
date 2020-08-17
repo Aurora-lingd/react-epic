@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { observer } from 'mobx-react'
 import { useStores } from '../stores'
-import { observe } from 'mobx'
-const ComponentLogin = observe(() => {
-  const { AuthStore } = useStores()
+
+const ComponentLogin = observer(() => {
+  const { AuthStore } = useStores();
+  const inputRef = useRef()
+  const bindChange = (e) => {
+    AuthStore.setUsername(inputRef.current.value)
+  }
   return (
     <>
-      <h1>Login</h1>
+      <h1>Login:{AuthStore.values.username}</h1>
+      <input onChange={bindChange} ref={inputRef} />
     </>
   )
 })
