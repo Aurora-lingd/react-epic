@@ -30,6 +30,24 @@ const Component = () => {
     console.log('Failed:', errorInfo);
   };
 
+  const Validators = {
+    username(rule,value){
+      console.log(rule.value)
+      if (/\W/.test(value)) return Promise.reject('不能出现字母数字下划线以外字符');
+      if (value.length<4 || value.length >10) return Promise.reject('长度为4~10个字符');
+     return  Promise.resolve();
+    }
+  }
+  //判断其他是否和我相等
+  const confirmPassword = ({getFieldValue})=>({
+    validator(rule,value){
+      if (!value || getFieldValue('password') === value){
+        return Promise.resolve()
+      }
+      return Promise.reject('两次密码不一致')
+    }
+  })
+
   return (
     <Wrapper>
       <Title>注册</Title>
@@ -42,22 +60,27 @@ const Component = () => {
         <Form.Item
           label="用户名"
           name="username"
-          rules={[{required: true, message: '输入用户名'}]}
+          rules={[{required: true, message: '输入用户名'},{validator:Validators.username}]}
         >
           <Input/>
         </Form.Item>
 
         <Form.Item
-          label="密码"
+          label="输入密码"
           name="password"
-          rules={[{required: true, message: '输入密码'}]}
+          rules={[
+            {required: true, message: '输入密码'},
+            {min:4,message:'最少4个字符'},
+            {max:16,message:'最多16个字符'}
+
+            ]}
         >
           <Input.Password/>
         </Form.Item>
         <Form.Item
           label="确认密码"
-          name="password"
-          rules={[{required: true, message: '再次确认密码'}]}
+          name="confirmPassword"
+          rules={[{required: true, message: '再次确认密码'},confirmPassword]}
         >
           <Input.Password/>
         </Form.Item>
