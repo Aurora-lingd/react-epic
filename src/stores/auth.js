@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx'
-
+import Modal from '../models'
 class AuthStore {
   @observable isLogin = false;
   @observable isLoading = false;
