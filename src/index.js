@@ -9,11 +9,9 @@ import {
 } from 'react-router-dom'
 
 ReactDom.render(
-  <React.StrictMode>
     <Router>
       <App />
-    </Router>
-  </React.StrictMode>,
+    </Router>,
   document.getElementById('root')
 )
 serviceWorker.unregister();

@@ -1,11 +1,24 @@
-import React, {useState} from 'react'
-//import LogoUrl from './logo.svg'
-import {NavLink} from 'react-router-dom'
+import React from 'react'
+import {NavLink,useHistory} from 'react-router-dom'
 import styled from 'styled-components'
 import {Button} from "antd";
+import {useStores} from "../stores";
+import {observer} from 'mobx-react'
 
-function ComponentHeader() {
-  const [isLogin, setIsLogin] = useState(false)
+const ComponentHeader = observer(()=> {
+  const history = useHistory()
+  const {UserStore,AuthStore} = useStores()
+  const handleLogout= ()=>{
+    AuthStore.logout()
+  }
+  const handLogin = ()=>{
+    console.log('跳转登陆页面')
+    history.push('/login')
+  }
+  const handRegister = ()=>{
+    console.log('跳转注册页面')
+    history.push('/register')
+  }
   return (
     <Header>
       <nav>
@@ -15,19 +28,19 @@ function ComponentHeader() {
       </nav>
       <Login>
         {
-          isLogin ?
+          UserStore.currentUser ?
             <>
-              Jack <StyledButton onClick={()=>setIsLogin(false)} >注销</StyledButton>
+              {UserStore.currentUser.attributes.username} <StyledButton onClick={handleLogout} >注销</StyledButton>
             </> :
             <>
-              <StyledButton onClick={()=>setIsLogin(true)}>登录</StyledButton>
-              <StyledButton>注册</StyledButton>
+              <StyledButton onClick={handLogin}>登录</StyledButton>
+              <StyledButton onClick={handRegister}>注册</StyledButton>
             </>
         }
       </Login>
     </Header>
   )
-}
+})
 
 export default ComponentHeader
 const StyledButton = styled(Button)`
@@ -41,7 +54,7 @@ const Header = styled.header`
     display:flex;
     align-items: center;
     background-color:#f6d186;
-    color:#fff;
+    color:#333;
 `;
 const StyledLink = styled(NavLink)`
     margin-right:30px;
