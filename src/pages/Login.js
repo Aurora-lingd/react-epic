@@ -48,7 +48,6 @@ const Component = () => {
 
   const Validators = {
     username(rule,value){
-      console.log(rule.value)
       if (/\W/.test(value)) return Promise.reject('不能出现字母数字下划线以外字符');
       if (value.length<4 || value.length >10) return Promise.reject('长度为4~10个字符');
       return  Promise.resolve();

@@ -2,7 +2,6 @@ import {observable, action} from 'mobx'
 import {Uploader} from '../models'
 
 class ImageStore {
-
   @observable filename = '';
   @observable file = null;
   @observable isUploading = false;

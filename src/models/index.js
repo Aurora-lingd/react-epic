@@ -1,4 +1,4 @@
-import AV, { User} from "leancloud-storage";
+import AV, { Query, User,File } from 'leancloud-storage';
 
 AV.init({
   appId: "a7132GyWWG8LkecksE1vUPoV-gzGzoHsz",
@@ -36,21 +36,17 @@ const Auth = {
     return User.current()
   }
 
-}
+};
 const Uploader = {
-  add(file,filename){
-    const item = new AV.Object('Image');
-    const avFile = new AV.File(filename,file)
-    item.set('filename',filename)
-    item.set('owner',AV.User.current())
-    item.set('url',avFile)
+  add(file, filename) {
+    const item = new AV.Object('Img');
+    const avFile = new File(filename, file);
+    item.set('filename', filename);
+    item.set('owner', User.current());
+    item.set('url', avFile);
     return new Promise((resolve, reject) => {
-      item.save().then((serverFile)=>{
-        resolve(serverFile)
-      },error=>{
-        reject(error)
-      })
-    })
+      item.save().then(serverFile => resolve(serverFile), error => reject(error));
+    });
   }
 }
 
