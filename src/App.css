@@ -10,8 +10,11 @@ body{
 a{
   color: #111;
   text-decoration: none;
-}
 
+}
+.a{
+  color: #642929;
+}
 #root{
   display: flex;
   flex-direction: column;

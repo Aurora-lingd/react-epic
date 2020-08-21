@@ -3,7 +3,8 @@ import styled from 'styled-components'
 function ComponentFooter() {
     return (
         <Footer>
-            <p>Footer</p>
+          <div>请勿上传违反图片，违者后果自负</div>
+            <p>© 西柚图床</p>
         </Footer>
     )
 }
