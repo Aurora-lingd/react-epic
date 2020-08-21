@@ -5,7 +5,7 @@ import 'antd/dist/antd.css'
 import * as serviceWorker from './serviceWorker'
 import Modal from './models'
 import {
-  BrowserRouter as Router
+  HashRouter as Router
 } from 'react-router-dom'
 
 ReactDom.render(
