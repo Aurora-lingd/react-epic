@@ -1,7 +1,7 @@
 import React,{useRef} from "react";
 import {useStores} from "../stores";
 import {observer,useLocalStore} from 'mobx-react';
-import { Upload ,message} from 'antd';
+import { Upload ,message,Spin} from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import styled from "styled-components";
 const { Dragger } = Upload
@@ -17,6 +17,12 @@ text-align:center;
 `
 const Image = styled.img`
 max-width:300px;
+`
+const Input = styled.input`
+outline: none;
+border-radius: 4px;
+margin-right:10px;
+border:1px solid #333;
 `
 
 const Component = observer(()=>{
@@ -60,6 +66,15 @@ const Component = observer(()=>{
           message.warning('请先登录，在上传图片！')
           return false
       }
+      window.file = file
+      if (!/(svg$)|(png$)|(jpg$)|(jpeg$)|(gif$)/ig.test(file.type)){
+        message.error('只能上传png/svg/jpg/gif格式图片')
+        return  false
+      }
+      if (file.size > 1024*1024){
+        message.error('图片最大1M')
+        return false
+      }
       ImageStore.upload()
         .then((serverFile)=>{
           console.log('上传成功')
@@ -74,16 +89,17 @@ const Component = observer(()=>{
 
   return (
     <div>
+      <Spin tip="上传中" spinning={ImageStore.isUploading}>
       <Dragger {...props}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
-        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+        <p className="ant-upload-text">点击或拖拽即可上传图片</p>
         <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-          band files
+          仅支持 png/gif/jpg/svg/jpeg 格式的图片，图片最大为1M
         </p>
       </Dragger>
+      </Spin>
       {
         ImageStore.serverFile?
         <Result>
@@ -99,8 +115,8 @@ const Component = observer(()=>{
             </dd>
             <dt>更多尺寸</dt>
             <dd>
-              <input ref={ref1} onChange={bindWidth} type="text" placeholder="最大宽度（可选）"/>
-              <input ref={ref2} onChange={bindHeight} type="text" placeholder="最大高度（可选）"/>
+              <Input ref={ref1} onChange={bindWidth} type="text" placeholder="最大宽度（可选）"/>
+              <Input ref={ref2} onChange={bindHeight} type="text" placeholder="最大高度（可选）"/>
             </dd>
             <dd>
               <a href={store.fullStr} target="_blank">{store.fullStr}</a>
